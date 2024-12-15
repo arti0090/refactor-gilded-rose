@@ -6,7 +6,7 @@ namespace App\Updater;
 
 use App\Model\Item;
 
-final class NormalItemUpdater extends ItemUpdater
+final class DefaultItemUpdater extends ItemUpdater
 {
     public function update(Item $item): void
     {
@@ -15,11 +15,12 @@ final class NormalItemUpdater extends ItemUpdater
         $sellIn = $item->getSellIn();
         $quality = $item->getQuality();
 
-        if ($quality > self::MIN_QUALITY) {
-            $this->decreaseQuality($item);
+        if ($sellIn < 0 && $quality > self::MIN_QUALITY) {
+            $this->decreaseQuality($item, 2);
+            return;
         }
 
-        if ($sellIn < 0 && $quality > self::MIN_QUALITY) {
+        if ($quality > self::MIN_QUALITY) {
             $this->decreaseQuality($item);
         }
     }
