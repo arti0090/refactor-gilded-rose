@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Service;
+namespace Tests;
 
+use App\GildedRose;
 use App\Model\Item;
-use App\Service\GildedRose;
 use PHPUnit\Framework\TestCase;
 
 final class GildedRoseTest extends TestCase
