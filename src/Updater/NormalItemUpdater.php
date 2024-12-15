@@ -5,23 +5,22 @@ declare(strict_types=1);
 namespace App\Updater;
 
 use App\Model\Item;
-use App\Model\ItemQualityEnum;
 
-final class NormalItemUpdater implements ItemUpdaterInterface
+final class NormalItemUpdater extends ItemUpdater
 {
     public function update(Item $item): void
     {
+        $this->decreaseSellIn($item);
+
         $sellIn = $item->getSellIn();
         $quality = $item->getQuality();
 
-        $item->setSellIn(--$sellIn);
-
-        if ($quality > ItemQualityEnum::MIN_QUALITY->value) {
-            $item->setQuality(--$quality);
+        if ($quality > self::MIN_QUALITY) {
+            $this->decreaseQuality($item);
         }
 
-        if ($sellIn < 0 && $quality > ItemQualityEnum::MIN_QUALITY->value) {
-            $item->setQuality(--$quality);
+        if ($sellIn < 0 && $quality > self::MIN_QUALITY) {
+            $this->decreaseQuality($item);
         }
     }
 }

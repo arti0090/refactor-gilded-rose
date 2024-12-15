@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace App\Updater;
 
 use App\Model\Item;
-use App\Model\ItemQualityEnum;
 
-final class BackstagePassItemUpdater implements ItemUpdaterInterface
+final class BackstagePassItemUpdater extends ItemUpdater
 {
     public function update(Item $item): void
     {
+        $this->decreaseSellIn($item);
         $sellIn = $item->getSellIn();
-        $item->setSellIn(--$sellIn);
 
         if ($sellIn < 0) {
-            $item->setQuality(ItemQualityEnum::MIN_QUALITY->value);
+            $item->setQuality(self::MIN_QUALITY);
             return;
         }
 
@@ -30,13 +29,5 @@ final class BackstagePassItemUpdater implements ItemUpdaterInterface
         }
 
         $this->increaseQuality($item);
-    }
-
-    private function increaseQuality(Item $item, int $amount = 1): void
-    {
-        $item->setQuality(\min(
-            $item->getQuality() + $amount,
-            ItemQualityEnum::MAX_QUALITY->value,
-        ));
     }
 }

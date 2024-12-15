@@ -5,26 +5,25 @@ declare(strict_types=1);
 namespace App\Updater;
 
 use App\Model\Item;
-use App\Model\ItemQualityEnum;
 
-final class AgedBrieItemUpdater implements ItemUpdaterInterface
+final class AgedBrieItemUpdater extends ItemUpdater
 {
     public function update(Item $item): void
     {
-        $item->setSellIn($item->getSellIn() - 1);
+        $this->decreaseSellIn($item);
 
         $quality = $item->getQuality();
 
-        if ($quality < ItemQualityEnum::MAX_QUALITY->value) {
-            $item->setQuality(++$quality);
+        if ($quality < self::MAX_QUALITY) {
+            $this->increaseQuality($item);
         }
 
-        if ($quality === ItemQualityEnum::MAX_QUALITY->value) {
+        if ($quality === self::MAX_QUALITY) {
             return;
         }
 
-        if ($item->getSellIn() < ItemQualityEnum::MIN_QUALITY->value) {
-            $item->setQuality(++$quality);
+        if ($item->getSellIn() < self::MIN_QUALITY) {
+            $this->increaseQuality($item);
         }
     }
 }
