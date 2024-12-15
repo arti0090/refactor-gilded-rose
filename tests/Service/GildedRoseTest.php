@@ -1,13 +1,18 @@
 <?php
 
-use App\GildedRose;
-use App\Item;
+declare(strict_types=1);
+
+namespace Tests\Service;
+
+use App\Model\Item;
+use App\Service\GildedRose;
 use PHPUnit\Framework\TestCase;
 
-class GildedRoseTest extends TestCase
+final class GildedRoseTest extends TestCase
 {
     /**
      * @dataProvider itemsProvider
+     *
      * @param string $name
      * @param int $sellIn
      * @param int $quality

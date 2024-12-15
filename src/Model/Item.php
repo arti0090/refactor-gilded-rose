@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+declare(strict_types=1);
+
+namespace App\Model;
 
 final class Item
 {
@@ -8,7 +10,7 @@ final class Item
     public $sell_in;
     public $quality;
 
-    function __construct($name, $sell_in, $quality)
+    public function __construct($name, $sell_in, $quality)
     {
         $this->name = $name;
         $this->sell_in = $sell_in;
