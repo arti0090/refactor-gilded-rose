@@ -11,14 +11,17 @@ final class NormalItemUpdater implements ItemUpdaterInterface
 {
     public function update(Item $item): void
     {
-        $item->sell_in--;
+        $sellIn = $item->getSellIn();
+        $quality = $item->getQuality();
 
-        if ($item->quality > ItemQualityEnum::MIN_QUALITY->value) {
-            $item->quality--;
+        $item->setSellIn(--$sellIn);
+
+        if ($quality > ItemQualityEnum::MIN_QUALITY->value) {
+            $item->setQuality(--$quality);
         }
 
-        if ($item->sell_in < 0 && $item->quality > ItemQualityEnum::MIN_QUALITY->value) {
-            $item->quality--;
+        if ($sellIn < 0 && $quality > ItemQualityEnum::MIN_QUALITY->value) {
+            $item->setQuality(--$quality);
         }
     }
 }

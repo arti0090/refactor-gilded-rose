@@ -30,8 +30,7 @@ final class GildedRose
 
     public function updateQuality(Item $item): void
     {
-        $name = $item->name;
-        $updater = $this->updaters[$name] ?? new NormalItemUpdater();
+        $updater = $this->updaters[$item->getName()] ?? new NormalItemUpdater();
         $updater->update($item);
     }
 }

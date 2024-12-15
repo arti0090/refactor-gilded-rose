@@ -6,19 +6,45 @@ namespace App\Model;
 
 final class Item
 {
-    public string $name;
-    public int $sell_in;
-    public int $quality;
+    public function __construct(
+        private string $name,
+        private int $sell_in,
+        private int $quality,
+    ) {
+    }
 
-    public function __construct(string $name, int $sell_in, int $quality)
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
     {
         $this->name = $name;
-        $this->sell_in = $sell_in;
+    }
+
+    public function getSellIn(): int
+    {
+        return $this->sell_in;
+    }
+
+    public function setSellIn(int $sellIn): void
+    {
+        $this->sell_in = $sellIn;
+    }
+
+    public function getQuality(): int
+    {
+        return $this->quality;
+    }
+
+    public function setQuality(int $quality): void
+    {
         $this->quality = $quality;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return "{$this->name}, {$this->sell_in}, {$this->quality}";
+        return "{$this->getName()}, {$this->getSellIn()}, {$this->getQuality()}";
     }
 }

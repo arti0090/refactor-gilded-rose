@@ -11,19 +11,20 @@ final class BackstagePassItemUpdater implements ItemUpdaterInterface
 {
     public function update(Item $item): void
     {
-        $item->sell_in--;
+        $sellIn = $item->getSellIn();
+        $item->setSellIn(--$sellIn);
 
-        if ($item->sell_in < 0) {
-            $item->quality = ItemQualityEnum::MIN_QUALITY->value;
+        if ($sellIn < 0) {
+            $item->setQuality(ItemQualityEnum::MIN_QUALITY->value);
             return;
         }
 
-        if ($item->sell_in < 5) {
+        if ($sellIn < 5) {
             $this->increaseQuality($item, 3);
             return;
         }
 
-        if ($item->sell_in < 10) {
+        if ($sellIn < 10) {
             $this->increaseQuality($item, 2);
             return;
         }
@@ -33,6 +34,9 @@ final class BackstagePassItemUpdater implements ItemUpdaterInterface
 
     private function increaseQuality(Item $item, int $amount = 1): void
     {
-        $item->quality = min($item->quality + $amount, ItemQualityEnum::MAX_QUALITY->value);
+        $item->setQuality(\min(
+            $item->getQuality() + $amount,
+            ItemQualityEnum::MAX_QUALITY->value,
+        ));
     }
 }

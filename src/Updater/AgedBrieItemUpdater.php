@@ -11,18 +11,20 @@ final class AgedBrieItemUpdater implements ItemUpdaterInterface
 {
     public function update(Item $item): void
     {
-        $item->sell_in--;
+        $item->setSellIn($item->getSellIn() - 1);
 
-        if ($item->quality < ItemQualityEnum::MAX_QUALITY->value) {
-            $item->quality++;
+        $quality = $item->getQuality();
+
+        if ($quality < ItemQualityEnum::MAX_QUALITY->value) {
+            $item->setQuality(++$quality);
         }
 
-        if ($item->quality === ItemQualityEnum::MAX_QUALITY->value) {
+        if ($quality === ItemQualityEnum::MAX_QUALITY->value) {
             return;
         }
 
-        if ($item->sell_in < ItemQualityEnum::MIN_QUALITY->value) {
-            $item->quality++;
+        if ($item->getSellIn() < ItemQualityEnum::MIN_QUALITY->value) {
+            $item->setQuality(++$quality);
         }
     }
 }
