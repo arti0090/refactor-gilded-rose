@@ -10,17 +10,14 @@ use PHPUnit\Framework\TestCase;
 
 final class GildedRoseTest extends TestCase
 {
-    /**
-     * @dataProvider itemsProvider
-     *
-     * @param string $name
-     * @param int $sellIn
-     * @param int $quality
-     * @param int $expectedSellIn
-     * @param int $expectedQuality
-     */
-    public function testUpdateQualityTest($name, $sellIn, $quality, $expectedSellIn, $expectedQuality): void
-    {
+    /** @dataProvider itemsProvider */
+    public function testUpdateQualityTest(
+        string $name,
+        int $sellIn,
+        int $quality,
+        int $expectedSellIn,
+        int $expectedQuality,
+    ): void {
         $item = new Item($name, $sellIn, $quality);
 
         $gildedRose = new GildedRose();

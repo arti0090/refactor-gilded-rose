@@ -4,57 +4,63 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Model\Item;
+use App\Model\ItemQualityEnum;
+
 final class GildedRose
 {
-    public function updateQuality($item)
+    public const AGED_BRIE_ITEM = 'Aged Brie';
+    public const BACKSTAGE_ITEM = 'Backstage passes to a TAFKAL80ETC concert';
+    public const SULFURAS_ITEM = 'Sulfuras, Hand of Ragnaros';
+
+    public function updateQuality(Item $item): void
     {
-        if ($item->name !== 'Aged Brie' and $item->name !== 'Backstage passes to a TAFKAL80ETC concert') {
+        if ($item->name !== self::AGED_BRIE_ITEM && $item->name !== self::BACKSTAGE_ITEM) {
             if ($item->quality > 0) {
-                if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
-                    $item->quality = $item->quality - 1;
+                if ($item->name !== self::SULFURAS_ITEM) {
+                    $item->quality--;
                 } else {
-                    $item->quality = 80;
+                    $item->quality = ItemQualityEnum::LEGENDARY_QUALITY->value;
                 }
             }
         } else {
-            if ($item->quality < 50) {
-                $item->quality = $item->quality + 1;
-                if ($item->name === 'Backstage passes to a TAFKAL80ETC concert') {
+            if ($item->quality < ItemQualityEnum::MAX_QUALITY->value) {
+                $item->quality++;
+                if ($item->name === self::BACKSTAGE_ITEM) {
                     if ($item->sell_in < 11) {
-                        if ($item->quality < 50) {
-                            $item->quality = $item->quality + 1;
+                        if ($item->quality < ItemQualityEnum::MAX_QUALITY->value) {
+                            $item->quality++;
                         }
                     }
                     if ($item->sell_in < 6) {
-                        if ($item->quality < 50) {
-                            $item->quality = $item->quality + 1;
+                        if ($item->quality < ItemQualityEnum::MAX_QUALITY->value) {
+                            $item->quality++;
                         }
                     }
                 }
             }
         }
 
-        if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
-            $item->sell_in = $item->sell_in - 1;
+        if ($item->name !== self::SULFURAS_ITEM) {
+            $item->sell_in--;
         }
 
         if ($item->sell_in < 0) {
-            if ($item->name !== 'Aged Brie') {
-                if ($item->name !== 'Backstage passes to a TAFKAL80ETC concert') {
+            if ($item->name !== self::AGED_BRIE_ITEM) {
+                if ($item->name !== self::BACKSTAGE_ITEM) {
                     if ($item->quality > 0) {
-                        if ($item->name !== 'Sulfuras, Hand of Ragnaros') {
-                            $item->quality = $item->quality - 1;
+                        if ($item->name !== self::SULFURAS_ITEM) {
+                            $item->quality--;
                         }
                     }
                 } else {
-                    $item->quality = $item->quality - $item->quality;
+                    $item->quality -= $item->quality;
                 }
             } else {
-                if ($item->quality < 50) {
-                    $item->quality = $item->quality + 1;
+                if ($item->quality < ItemQualityEnum::MAX_QUALITY->value) {
+                    $item->quality++;
                 }
             }
         }
     }
-
 }
