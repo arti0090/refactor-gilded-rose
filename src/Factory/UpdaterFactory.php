@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Factory;
 
 use App\Model\Item;
-use App\Updater\AgedBrieItemUpdater;
-use App\Updater\BackstagePassItemUpdater;
+use App\Model\ItemType;
+use App\Updater\AppreciatingItemUpdater;
+use App\Updater\EventPassItemUpdater;
 use App\Updater\ItemUpdater;
 use App\Updater\LegendaryItemUpdater;
 use App\Updater\DefaultItemUpdater;
@@ -14,11 +15,10 @@ use App\Updater\DefaultItemUpdater;
 final class UpdaterFactory
 {
     public static function createNew(Item $item): ItemUpdater {
-        // Note: I would change it to $item->getType(), explained more inside Item file
-        return match ($item->getName()) {
-            'Aged Brie' => new AgedBrieItemUpdater(),
-            'Backstage passes to a TAFKAL80ETC concert' => new BackstagePassItemUpdater(),
-            'Sulfuras, Hand of Ragnaros' => new LegendaryItemUpdater(),
+        return match ($item->getType()) {
+            ItemType::APPRECIATING_ITEM_TYPE => new AppreciatingItemUpdater(),
+            ItemType::EVENT_PASS_ITEM_TYPE => new EventPassItemUpdater(),
+            ItemType::LEGENDARY_ITEM_TYPE => new LegendaryItemUpdater(),
             default => new DefaultItemUpdater(),
         };
     }

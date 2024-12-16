@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-// Note: From task description I could not get how much change I can do inside this Item file,
-// but if available I would add property 'string $type' and by using it I would later choose the ItemUpdater to use f.e. (pseudocode)
-// if Item->type is Legendary then in UpdaterFactory match, use LegendaryItemUpdater
 final class Item
 {
     public function __construct(
         private string $name,
         private int $sell_in,
         private int $quality,
+        private string $type = ItemType::DEFAULT_ITEM_TYPE,
     ) {
     }
 
@@ -44,6 +42,16 @@ final class Item
     public function setQuality(int $quality): void
     {
         $this->quality = $quality;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): void
+    {
+        $this->type = $type;
     }
 
     public function __toString(): string

@@ -1,3 +1,12 @@
+## Note
+This branch is changing the Item so it stores Item Type value.
+Choosing the Updater strategy by type (rather than name) of item is much more flexible,
+than adjusting strategies for new names (name is more likely to change where types are more 'static').
+Further change could be adding the ItemFactories according to Type of Item, but as currently it is not used anywhere (i mean
+in app entry GildedRose->updateQuality() we are not creating item) I was not creating unused Classes.
+
+## Description
+
 Poniższe zadanie zostało stworzone do ćwiczenia praktycznych umiejętności refaktoryzacji kodu. 
 W katalogu tests znajduje się 19 testów, które w momencie rozpoczęcia zadania wszystkie uruchamiają
 się i przechodzą prawidłowo. Testy te będą podstawowym narzędziem umożliwiającym kontrolę refaktoryzowanego kodu.

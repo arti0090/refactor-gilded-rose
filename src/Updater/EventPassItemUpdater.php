@@ -6,7 +6,7 @@ namespace App\Updater;
 
 use App\Model\Item;
 
-final class BackstagePassItemUpdater extends ItemUpdater
+final class EventPassItemUpdater extends ItemUpdater
 {
     public function update(Item $item): void
     {

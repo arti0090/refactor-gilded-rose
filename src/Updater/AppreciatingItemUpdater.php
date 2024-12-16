@@ -6,7 +6,7 @@ namespace App\Updater;
 
 use App\Model\Item;
 
-final class AgedBrieItemUpdater extends ItemUpdater
+final class AppreciatingItemUpdater extends ItemUpdater
 {
     public function update(Item $item): void
     {

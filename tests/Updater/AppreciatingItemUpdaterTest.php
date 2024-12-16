@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace Tests\Updater;
 
 use App\Model\Item;
-use App\Updater\AgedBrieItemUpdater;
+use App\Model\ItemType;
+use App\Updater\AppreciatingItemUpdater;
 use App\Updater\ItemUpdaterInterface;
 use PHPUnit\Framework\TestCase;
 
-final class AgedBrieItemUpdaterTest extends TestCase
+final class AppreciatingItemUpdaterTest extends TestCase
 {
     private ItemUpdaterInterface $updater;
 
     protected function setUp(): void
     {
-        $this->updater = new AgedBrieItemUpdater();
+        $this->updater = new AppreciatingItemUpdater();
     }
 
     public function testQualityIncreasesWhenSellInIsPositive(): void
     {
-        $item = new Item('Aged Brie', 10, 20);
+        $item = new Item('Aged Brie', 10, 20, ItemType::APPRECIATING_ITEM_TYPE);
 
         $this->updater->update($item);
 
@@ -30,7 +31,7 @@ final class AgedBrieItemUpdaterTest extends TestCase
 
     public function testQualityIncreasesTwiceWhenSellInIsNegative(): void
     {
-        $item = new Item('Aged Brie', -1, 20);
+        $item = new Item('Aged Brie', -1, 20, ItemType::APPRECIATING_ITEM_TYPE);
 
         $this->updater->update($item);
 
@@ -40,7 +41,7 @@ final class AgedBrieItemUpdaterTest extends TestCase
 
     public function testQualityDoesNotExceedMaxQuality(): void
     {
-        $item = new Item('Aged Brie', 5, 50);
+        $item = new Item('Aged Brie', 5, 50, ItemType::APPRECIATING_ITEM_TYPE);
 
         $this->updater->update($item);
 
@@ -50,7 +51,7 @@ final class AgedBrieItemUpdaterTest extends TestCase
 
     public function testQualityIncreasesToMaxWhenCloseToMax(): void
     {
-        $item = new Item('Aged Brie', 0, 49);
+        $item = new Item('Aged Brie', 0, 49, ItemType::APPRECIATING_ITEM_TYPE);
 
         $this->updater->update($item);
 
